@@ -2,7 +2,6 @@ const audio = document.querySelector('#stream')
 const playPauseButton = document.querySelector('[name="play-pause"]')
 const playPauseButtonIcon = playPauseButton.querySelector('i.fas')
 const volumeControl = document.querySelector('[name="volume"]')
-const currentlyPlaying = document.querySelector('.currently-playing-title')
 const volumeButton = document.querySelector('[name="mute"]')
 const volumeButtonIcon = volumeButton.querySelector('i.fas')
 
@@ -11,14 +10,6 @@ let fetchInterval = null
 let currentVolume = 0.2
 
 audio.volume = currentVolume
-
-/**
- * Fetches the currently playing
- * @returns {Promise<any>}
- */
-const fetchCurrentlyPlaying = () => fetch('...')
-  .then(response => response.json())
-  .then(data => currentlyPlaying.innerText = data.currentSong)
 
 /**
  * Adjusts the icon of the "mute" button based on the given volume.
@@ -76,15 +67,11 @@ playPauseButton.addEventListener('click', () => {
     playPauseButtonIcon.classList.add('fa-play')
 
     clearInterval(fetchInterval)
-    currentlyPlaying.innerText = 'Listen to Some Radio Station'
   } else {
     audio.play()
 
     playPauseButtonIcon.classList.remove('fa-play')
     playPauseButtonIcon.classList.add('fa-pause')
-
-    fetchCurrentlyPlaying()
-    fetchInterval = setInterval(fetchCurrentlyPlaying, 3000)
   }
 
   isPlaying = !isPlaying
